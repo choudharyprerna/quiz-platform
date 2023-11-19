@@ -8,6 +8,7 @@ const quizBox = document.querySelector('.quiz-box');
 const resultBox = document.querySelector('.result-box');
 
 
+
 startBtn.onclick = () => {
     popupInfo.classList.add('active');
     main.classList.add('active');
@@ -26,6 +27,7 @@ continueBtn.onclick = () => {
     questionCounter(1);
     headerScore();
 }
+
 
 let questionCount = 0;
 let questionNumb = 1;
@@ -109,7 +111,23 @@ function showResultBox(){
     quizBox.classList.remove('active');
     resultBox.classList.add('active');
 
-    const scoreText = document.querySelector.querySelector('.score-text')
+    const scoreText = document.querySelector('.score-text');
     scoreText.textContent = `Your Score ${userScore} out of ${questions.length}`;
+
+    const circularProgress = document.querySelector('.circular-progress');
+    const progressValue = document.querySelector('.progress-value');
     
+    let progressStartValue = -1;
+    let progressEndValue = (userScore / questions.length)*100;
+    let speed = 20;
+
+    let progress = setInterval(() => {
+        progressStartValue++;
+        
+        progressValue.textContent = `${progressStartValue}%`;
+        circularProgress.computedStyleMap.background = `conic-gradient(#c40094 ${progressStartValue * 3.6}deg, rgba(255, 255, 255, .1) 0deg)`;
+        if(progressStartValue == progressEndValue){
+            clearInterval(progress);
+        }
+    }, speed);
 }
